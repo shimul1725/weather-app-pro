@@ -8,30 +8,61 @@
 </head>
 <body>
 
-  <div class="weather-card">
-    <h2>🌤️ Weather App Pro</h2>
+  <div class="glass-card">
     
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <button class="icon-btn">☰</button>
+      <h3>Weather App Pro</h3>
+      <div class="top-right-icons">
+        <button id="locationBtn" class="icon-btn" title="Current Location">📍</button>
+      </div>
+    </div>
+
+    <!-- Search Section -->
     <div class="search-box">
-      <input type="text" id="cityInput" placeholder="Enter city name..." />
+      <input type="text" id="cityInput" placeholder="Search city..." />
       <button id="searchBtn">Search</button>
-      <button id="locationBtn" title="Use Current Location">📍</button>
     </div>
 
     <p id="statusMessage"></p>
 
-    <!-- বর্তমান আবহাওয়ার তথ্য -->
-    <div id="weatherInfo" class="weather-info" style="display: none;">
-      <h3 id="cityName">---</h3>
-      <h1 id="temperature">--°C</h1>
-      <p id="description">---</p>
-      <p id="humidity">Humidity: --%</p>
+    <!-- Main Content Container -->
+    <div id="weatherInfo" style="display: none;">
       
-      <hr>
+      <!-- Blue Hero Weather Card -->
+      <div class="weather-hero-card">
+        <div class="hero-left">
+          <h2 id="cityName">Dhaka</h2>
+          <h1 id="temperature">28°C</h1>
+          <p id="description">Sunny</p>
+        </div>
+        <div class="hero-right">
+          <span class="weather-emoji">🌤️</span>
+        </div>
+      </div>
 
-      <!-- আগামী ৫ দিনের পূর্বাভাস -->
-      <h4>📅 5-Day Forecast</h4>
+      <!-- Extra Details Badge -->
+      <div class="metrics-row">
+        <div class="metric-badge">
+          <span>💨 Wind</span>
+          <strong id="windSpeed">8.4 km/h</strong>
+        </div>
+        <div class="metric-badge">
+          <span>💧 Humidity</span>
+          <strong id="humidity">91%</strong>
+        </div>
+      </div>
+
+      <!-- Forecast Section Header -->
+      <div class="section-header">
+        <h4>5-Day Forecast</h4>
+      </div>
+
+      <!-- 5-Day Forecast Cards -->
       <div id="forecastContainer" class="forecast-container"></div>
     </div>
+
   </div>
 
   <script src="script.js"></script>

@@ -9,15 +9,15 @@ const cityNameEl = document.querySelector("#cityName");
 const tempEl = document.querySelector("#temperature");
 const descEl = document.querySelector("#description");
 const humidityEl = document.querySelector("#humidity");
+const windSpeedEl = document.querySelector("#windSpeed");
 const forecastContainer = document.querySelector("#forecastContainer");
 
-// ২. Latitude & Longitude দিয়ে আবহাওয়া এবং ৫ দিনের Forecast আনার মূল ফাংশন
+// ২. Weather Data Fetch & Render
 const fetchWeatherData = async (lat, lon, locationName) => {
   try {
     statusMessage.innerText = "Fetching weather details...";
     weatherInfo.style.display = "none";
 
-    // Weather API Call (Current Weather + 5 Day Forecast)
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=relative_humidity_2m&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
     
     const response = await fetch(url);
@@ -26,26 +26,34 @@ const fetchWeatherData = async (lat, lon, locationName) => {
     const currentWeather = data.current_weather;
     const currentHumidity = data.hourly.relative_humidity_2m[0];
 
-    // DOM-এ বর্তমান আবহাওয়ার তথ্য বসানো
+    // DOM-এ বর্তমান ডাটা বসানো
     cityNameEl.innerText = locationName;
     tempEl.innerText = `${currentWeather.temperature}°C`;
-    descEl.innerText = `Wind Speed: ${currentWeather.windspeed} km/h`;
-    humidityEl.innerText = `Humidity: ${currentHumidity}%`;
+    descEl.innerText = `Wind: ${currentWeather.windspeed} km/h`;
+    windSpeedEl.innerText = `${currentWeather.windspeed} km/h`;
+    humidityEl.innerText = `${currentHumidity}%`;
 
-    // ৩. আগামী ৫ দিনের Forecast ডাইনামিকালি রেন্ডার করা
-    forecastContainer.innerHTML = ""; // আগের ডাটা ক্লিয়ার করা
+    // ৩. ৫ দিনের Forecast রেন্ডার
+    forecastContainer.innerHTML = "";
     
     for (let i = 0; i < 5; i++) {
-      const date = data.daily.time[i];
+      const dateStr = data.daily.time[i];
       const maxTemp = data.daily.temperature_2m_max[i];
-      const minTemp = data.daily.temperature_2m_min[i];
+
+      // তারিখ থেকে দিনের নাম (যেমন Wed, Thu) বের করা
+      const dateObj = new Date(dateStr);
+      const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
 
       const forecastItem = document.createElement("div");
       forecastItem.classList.add("forecast-item");
+      
+      // উদাহরণ হিসেবে ৩ নম্বর দিনকে active রাখা হয়েছে ডিজাইনের মতো
+      if (i === 2) forecastItem.classList.add("active");
+
       forecastItem.innerHTML = `
-        <p><strong>${date.slice(5)}</strong></p>
-        <p>🔴 ${maxTemp}°</p>
-        <p>🔵 ${minTemp}°</p>
+        <p class="date">${dayName}</p>
+        <p style="font-size: 18px; margin: 6px 0;">🌤️</p>
+        <p class="temp">${maxTemp}°</p>
       `;
       forecastContainer.appendChild(forecastItem);
     }
@@ -59,7 +67,7 @@ const fetchWeatherData = async (lat, lon, locationName) => {
   }
 };
 
-// ৪. শহরের নাম দিয়ে সার্চ করার লজিক
+// ৪. শহরের নাম দিয়ে সার্চ
 const getWeatherByCity = async () => {
   const city = cityInput.value.trim();
   if (!city) {
@@ -85,7 +93,7 @@ const getWeatherByCity = async () => {
   }
 };
 
-// ৫. ব্রাউজারের Geolocation ব্যবহার করে কন্টেন্ট ফিল করার লজিক
+// ৫. Geolocation Functionality
 const getWeatherByLocation = () => {
   if (navigator.geolocation) {
     statusMessage.innerText = "Getting your current location...";
@@ -100,11 +108,11 @@ const getWeatherByLocation = () => {
       }
     );
   } else {
-    statusMessage.innerText = "Geolocation is not supported by your browser.";
+    statusMessage.innerText = "Geolocation is not supported.";
   }
 };
 
-// ৬. ইভেন্ট লিসেনার
+// ইভেন্ট লিসেনার
 searchBtn.addEventListener("click", getWeatherByCity);
 locationBtn.addEventListener("click", getWeatherByLocation);
 cityInput.addEventListener("keyup", (e) => e.key === "Enter" && getWeatherByCity());

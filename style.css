@@ -1,94 +1,203 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #eef2f3;
+  background: #1e1e24; /* ডার্ক মডার্ন ব্যাকগ্রাউন্ড */
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  margin: 0;
-  padding: 20px 0;
+  padding: 20px;
 }
 
-.weather-card {
-  background: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 360px;
+/* ৩ডি গ্লাস লুকের মেইন কার্ড */
+.glass-card {
+  background: #f4f6fa;
+  width: 380px;
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 
+              inset 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
+/* Top Navigation Bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.top-bar h3 {
+  font-size: 16px;
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+.icon-btn {
+  background: #ffffff;
+  border: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Search Box */
 .search-box {
   display: flex;
-  gap: 6px;
-  margin-bottom: 15px;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
 input {
   flex: 1;
-  padding: 10px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  outline: none;
+  background: #ffffff;
   font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
 }
 
-button {
-  padding: 10px 12px;
-  background-color: #007bff;
+#searchBtn {
+  background: #4a90e2;
   color: white;
   border: none;
-  border-radius: 6px;
+  padding: 0 16px;
+  border-radius: 12px;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 14px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-#locationBtn {
-  background-color: #28a745;
-}
-
-#locationBtn:hover {
-  background-color: #218838;
 }
 
 #statusMessage {
-  font-size: 14px;
+  text-align: center;
+  font-size: 13px;
   color: #666;
+  margin-bottom: 10px;
 }
 
-.weather-info h1 {
-  font-size: 38px;
-  margin: 10px 0;
+/* ব্লু হিরো ওয়েদার কার্ড */
+.weather-hero-card {
+  background: linear-gradient(135deg, #5b9df2 0%, #3b7cd3 100%);
+  border-radius: 22px;
+  padding: 22px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(59, 124, 211, 0.3);
+  margin-bottom: 16px;
+}
+
+.weather-hero-card h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.weather-hero-card h1 {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.weather-hero-card p {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.weather-emoji {
+  font-size: 55px;
+}
+
+/* Extra Metrics Row */
+.metrics-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.metric-badge {
+  flex: 1;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.metric-badge span {
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.metric-badge strong {
   color: #333;
+  font-size: 14px;
 }
 
-hr {
-  border: 0;
-  height: 1px;
-  background: #eee;
-  margin: 20px 0 15px 0;
+/* Section Header */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
-/* Forecast Section Styles */
+.section-header h4 {
+  font-size: 15px;
+  color: #2c3e50;
+}
+
+/* 5-Day Forecast Grid/Flex */
 .forecast-container {
   display: flex;
   justify-content: space-between;
-  gap: 6px;
-  overflow-x: auto;
+  gap: 8px;
 }
 
 .forecast-item {
-  background: #f8f9fa;
-  padding: 8px;
-  border-radius: 8px;
+  background: #ffffff;
+  padding: 12px 8px;
+  border-radius: 16px;
   flex: 1;
-  font-size: 12px;
-  border: 1px solid #e9ecef;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+/* অ্যাক্টিভ দিন বা সিলেক্টেড কার্ডের স্টাইল (যেমন ছবিতে 'Wed' হাইলাইট ছিল) */
+.forecast-item.active {
+  background: #73a9f5;
+  color: white;
 }
 
 .forecast-item p {
-  margin: 4px 0;
+  margin: 3px 0;
+  font-size: 12px;
+}
+
+.forecast-item .date {
+  font-weight: 600;
+  color: #555;
+}
+
+.forecast-item.active .date {
+  color: white;
+}
+
+.forecast-item .temp {
+  font-size: 14px;
+  font-weight: 700;
 }
