@@ -201,3 +201,46 @@ input {
   font-size: 14px;
   font-weight: 700;
 }
+/* ================= Dynamic Themes ================= */
+
+/* Sunny / Clear Weather */
+body.theme-sunny {
+  background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+}
+body.theme-sunny .weather-hero-card {
+  background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%);
+  box-shadow: 0 10px 25px rgba(255, 94, 98, 0.4);
+}
+
+/* Cloudy / Foggy Weather */
+body.theme-cloudy {
+  background: linear-gradient(135deg, #616161 0%, #9bc5c3 100%);
+}
+body.theme-cloudy .weather-hero-card {
+  background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+  box-shadow: 0 10px 25px rgba(24, 40, 72, 0.4);
+}
+
+/* Rainy Weather */
+body.theme-rainy {
+  background: linear-gradient(135deg, #373b44 0%, #4286f4 100%);
+}
+body.theme-rainy .weather-hero-card {
+  background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+  box-shadow: 0 10px 25px rgba(0, 114, 255, 0.4);
+}
+
+/* Snowy Weather */
+body.theme-snowy {
+  background: linear-gradient(135deg, #e6dada 0%, #274046 100%);
+}
+body.theme-snowy .weather-hero-card {
+  background: linear-gradient(135deg, #83a4d4 0%, #b6fbff 100%);
+  color: #2c3e50;
+  box-shadow: 0 10px 25px rgba(131, 164, 212, 0.4);
+}
+
+/* Smooth Transition for Background Change */
+body {
+  transition: background 0.6s ease-in-out;
+}

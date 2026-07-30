@@ -13,6 +13,35 @@ const windSpeedEl = document.querySelector("#windSpeed");
 const forecastContainer = document.querySelector("#forecastContainer");
 
 // ২. Weather Data Fetch & Render
+// ১. Weather Code থেকে থিম ও ইমোজি পাওয়ার হেল্পার ফাংশন
+const getWeatherDetails = (code) => {
+  // Clear / Sunny
+  if (code === 0) return { theme: "theme-sunny", desc: "Clear Sky", emoji: "☀️" };
+  
+  // Mainly Clear / Particaly Cloudy / Overcast
+  if (code >= 1 && code <= 3) return { theme: "theme-cloudy", desc: "Cloudy", emoji: "⛅" };
+  
+  // Fog
+  if (code >= 45 && code <= 48) return { theme: "theme-cloudy", desc: "Foggy", emoji: "🌫️" };
+  
+  // Rain / Drizzle / Shower
+  if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) {
+    return { theme: "theme-rainy", desc: "Rainy", emoji: "🌧️" };
+  }
+  
+  // Snow
+  if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) {
+    return { theme: "theme-snowy", desc: "Snowy", emoji: "❄️" };
+  }
+
+  // Thunderstorm
+  if (code >= 95 && code <= 99) return { theme: "theme-rainy", desc: "Thunderstorm", emoji: "⛈️" };
+
+  // Default
+  return { theme: "theme-sunny", desc: "Clear", emoji: "🌤️" };
+};
+
+// ২. মূল Weather Fetch ফাংশন (আপডেট)
 const fetchWeatherData = async (lat, lon, locationName) => {
   try {
     statusMessage.innerText = "Fetching weather details...";
@@ -26,33 +55,41 @@ const fetchWeatherData = async (lat, lon, locationName) => {
     const currentWeather = data.current_weather;
     const currentHumidity = data.hourly.relative_humidity_2m[0];
 
-    // DOM-এ বর্তমান ডাটা বসানো
+    // Weather code দিয়ে থিম, বিবরণ ও ইমোজি নির্ধারণ
+    const { theme, desc, emoji } = getWeatherDetails(currentWeather.weathercode);
+
+    // 🎨 Dynamic Theme Apply (Body Class Change)
+    document.body.className = ""; // আগের সব থিম রিমুভ করা
+    document.body.classList.add(theme); // নতুন থিম যুক্ত করা
+
+    // DOM-এ ডাটা আপডেট
     cityNameEl.innerText = locationName;
     tempEl.innerText = `${currentWeather.temperature}°C`;
-    descEl.innerText = `Wind: ${currentWeather.windspeed} km/h`;
+    descEl.innerText = desc;
     windSpeedEl.innerText = `${currentWeather.windspeed} km/h`;
     humidityEl.innerText = `${currentHumidity}%`;
 
-    // ৩. ৫ দিনের Forecast রেন্ডার
+    // হিরো কার্ডের ইমোজি আপডেট
+    const weatherEmojiEl = document.querySelector(".weather-emoji");
+    if (weatherEmojiEl) weatherEmojiEl.innerText = emoji;
+
+    // ৫ দিনের Forecast রেন্ডার
     forecastContainer.innerHTML = "";
     
     for (let i = 0; i < 5; i++) {
       const dateStr = data.daily.time[i];
       const maxTemp = data.daily.temperature_2m_max[i];
 
-      // তারিখ থেকে দিনের নাম (যেমন Wed, Thu) বের করা
       const dateObj = new Date(dateStr);
       const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
 
       const forecastItem = document.createElement("div");
       forecastItem.classList.add("forecast-item");
-      
-      // উদাহরণ হিসেবে ৩ নম্বর দিনকে active রাখা হয়েছে ডিজাইনের মতো
-      if (i === 2) forecastItem.classList.add("active");
+      if (i === 0) forecastItem.classList.add("active");
 
       forecastItem.innerHTML = `
         <p class="date">${dayName}</p>
-        <p style="font-size: 18px; margin: 6px 0;">🌤️</p>
+        <p style="font-size: 18px; margin: 6px 0;">${emoji}</p>
         <p class="temp">${maxTemp}°</p>
       `;
       forecastContainer.appendChild(forecastItem);
