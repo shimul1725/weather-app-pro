@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App Pro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="weather-card">
+    <h2>🌤️ Weather App Pro</h2>
+    
+    <div class="search-box">
+      <input type="text" id="cityInput" placeholder="Enter city name..." />
+      <button id="searchBtn">Search</button>
+      <button id="locationBtn" title="Use Current Location">📍</button>
+    </div>
+
+    <p id="statusMessage"></p>
+
+    <!-- বর্তমান আবহাওয়ার তথ্য -->
+    <div id="weatherInfo" class="weather-info" style="display: none;">
+      <h3 id="cityName">---</h3>
+      <h1 id="temperature">--°C</h1>
+      <p id="description">---</p>
+      <p id="humidity">Humidity: --%</p>
+      
+      <hr>
+
+      <!-- আগামী ৫ দিনের পূর্বাভাস -->
+      <h4>📅 5-Day Forecast</h4>
+      <div id="forecastContainer" class="forecast-container"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
