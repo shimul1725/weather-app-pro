@@ -59,3 +59,41 @@ weather-app-pro/
 ├── docs/
 │   └── readme-banner.png  # Banner image for README
 └── README.md           # Project documentation
+```
+
+---
+
+## 🏗️ System Architecture & Data Flow
+
+The diagram below illustrates how client-side user interactions trigger asynchronous requests to external API services and dynamically render UI updates:
+
+```text
+ ┌─────────────────────────────────────────────────────────────────────────────┐
+ │                             BROWSER (CLIENT SIDE)                           │
+ │                                                                             │
+ │   ┌──────────────────────┐                 ┌─────────────────────────────┐  │
+ │   │     HTML Structure   │  ◄───────────►  │     CSS Styling & Themes    │  │
+ │   │ (Input, Buttons, Cards)                 │ (Glassmorphism, Dynamic BG) │  │
+ │   └──────────┬───────────┘                 └─────────────────────────────┘  │
+ │              │                                                            │
+ │              │ (User Interactions: Search Click / Keypress / Geolocation)   │
+ │              ▼                                                            │
+ │   ┌──────────────────────────────────────────────────────────────────────┐  │
+ │   │                        JAVASCRIPT (ENGINE)                           │  │
+ │   │                                                                      │  │
+ │   │  1. DOM Event Listener capturing inputs                              │  │
+ │   │  2. Triggers async/await fetch request                               │  │
+ │   │  3. Parses weathercode & dynamically updates DOM & CSS Classes       │  │
+ │   └──────────────────┬───────────────────────────────▲───────────────────┘  │
+ └──────────────────────┼───────────────────────────────┼──────────────────────┘
+                        │                               │
+         (1. HTTP GET)  │ `geocoding-api.open-meteo`    │ (2. Returns Lat/Long &
+        city name search│ `api.open-meteo.com`          │    Weather JSON Data)
+                        ▼                               │
+ ┌──────────────────────────────────────────────────────┴──────────────────────┐
+ │                             EXTERNAL WEATHER API                            │
+ │                                                                             │
+ │                   ┌──────────────────────────────────────┐                  │
+ │                   │   Open-Meteo Cloud Servers / DB      │                  │
+ │                   └──────────────────────────────────────┘                  │
+ └─────────────────────────────────────────────────────────────────────────────┘
